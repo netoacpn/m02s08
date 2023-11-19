@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "REGISTROS")
 public class Registro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +26,17 @@ public class Registro {
         this.horaRegistro = horaRegistro;
         this.tipoRegistro = tipoRegistro;
         this.funcionario = funcionario;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public LocalDateTime getHoraRegistro() {
+        return horaRegistro;
+    }
+
+    public TipoRegistro getTipoRegistro() {
+        return tipoRegistro;
     }
 }

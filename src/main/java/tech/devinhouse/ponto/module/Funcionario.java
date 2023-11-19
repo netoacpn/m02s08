@@ -1,7 +1,10 @@
 package tech.devinhouse.ponto.module;
 
 import jakarta.persistence.*;
+import tech.devinhouse.ponto.dto.CriarFuncionarioDTO;
+import tech.devinhouse.ponto.dto.RegistroDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,9 +22,9 @@ public class Funcionario {
 
     @OneToMany(mappedBy = "employee", orphanRemoval = true,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Registro> registers;
+    private List<Registro> registros = new ArrayList<>();
 
-    public Funcionario() {
+    public Funcionario(CriarFuncionarioDTO body) {
     }
 
     public Funcionario(Integer id, String nome, String cargo, float salario) {
@@ -31,5 +34,23 @@ public class Funcionario {
         this.salario = salario;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public float getSalario() {
+        return salario;
+    }
+
+    public List<RegistroDTO> getRegistro() {
+        return this.registros.stream().map(RegistroDTO::new).toList();
+    }
 }
