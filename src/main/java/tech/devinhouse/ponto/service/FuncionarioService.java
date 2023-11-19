@@ -1,13 +1,13 @@
 package tech.devinhouse.ponto.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import tech.devinhouse.ponto.dto.CriarFuncionarioDTO;
-import tech.devinhouse.ponto.dto.FuncionarioDetalhadoDTO;
-import tech.devinhouse.ponto.dto.FuncionarioDTO;
+import tech.devinhouse.ponto.dto.*;
 import tech.devinhouse.ponto.module.Funcionario;
+import tech.devinhouse.ponto.module.Registro;
 import tech.devinhouse.ponto.repository.FuncionarioRepository;
 
 @Service
@@ -25,11 +25,11 @@ public class FuncionarioService {
     }
 
     @Transactional
-    public RegistroDTO registroRecord(Integer id, RegistroDTO body) {
+    public RegistroDTO criarRegistro(Integer id, @Valid CriarRegistroDTO body) {
         Funcionario funcionario = this.funcionarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Employee with id not found: " + id));
 
-        Registro reigstro = new Registro(body.type(), funcionario);
+        Registro registro = new Registro(body.type(), funcionario);
         funcionario.getRegistro().add(registro);
 
         return new RegistroDTO(registro);
